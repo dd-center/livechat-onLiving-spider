@@ -1,0 +1,7 @@
+{
+  "name": "livechat-onLiving-spider",
+  "version": "1.0.0",
+  "dependencies": {
+    "got": "latest"
+  }
+}
