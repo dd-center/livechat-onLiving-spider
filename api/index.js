@@ -3,13 +3,6 @@ const got = require('got');
 const headers = {
     "user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36",
 };
-const timeout =(delay)=>{
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve()
-        }, delay)
-    })
-};
 const getFirstContinuation = async (videoId)=>{
     const res = (await got('https://www.youtube.com/watch?v='+videoId,{
         headers
@@ -32,18 +25,6 @@ const getActionAndContinuation = async (loadContinuation)=>{
         timeoutMs
     }
 };
-// (async ()=>{
-//     let continuation = await getFirstContinuation('L7K8jgHou6o');
-//     let actions = [];
-//     while (continuation){
-//         await timeout(8000)
-//         const res = await getActionAndContinuation(continuation);
-//         continuation = res.continuation;
-//         actions=[...actions,...res.actions];
-//         console.log(JSON.stringify(actions))
-//         console.log(res.timeoutMs)
-//     }
-// })()
 module.exports = {
     getFirstContinuation,
     getActionAndContinuation
