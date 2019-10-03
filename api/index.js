@@ -10,20 +10,24 @@ const getFirstContinuation = async (videoId)=>{
     try {
         return res.match(/"reloadContinuationData":{"continuation":".*?"/)[0].split('\"')[5];
     }catch (e) {
-        console.log(e);
         return null;
     }
 };
 const getActionAndContinuation = async (loadContinuation)=>{
-    const res = JSON.parse((await got('https://www.youtube.com/live_chat?continuation='+loadContinuation+'&hidden=false&pbj=1',{headers})).body);
-    const continuation = res[1].response.continuationContents.liveChatContinuation.continuations[0].timedContinuationData.continuation;
-    const actions = res[1].response.continuationContents.liveChatContinuation.actions;
-    const timeoutMs = res[1].response.continuationContents.liveChatContinuation.continuations[0].timedContinuationData.timeoutMs;
-    return {
-        continuation,
-        actions,
-        timeoutMs
+    try {
+        const res = JSON.parse((await got('https://www.youtube.com/live_chat?continuation='+loadContinuation+'&hidden=false&pbj=1',{headers})).body);
+        const continuation = res[1].response.continuationContents.liveChatContinuation.continuations[0].timedContinuationData.continuation;
+        const actions = res[1].response.continuationContents.liveChatContinuation.actions;
+        const timeoutMs = res[1].response.continuationContents.liveChatContinuation.continuations[0].timedContinuationData.timeoutMs;
+        return {
+            continuation,
+            actions,
+            timeoutMs
+        }
+    }catch (e) {
+        return null;
     }
+
 };
 module.exports = {
     getFirstContinuation,
