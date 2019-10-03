@@ -1,4 +1,4 @@
-const {getFirstContinuation,getActionAndContinuation} = require('api');
+const {getFirstContinuation,getActionAndContinuation} = require('./api');
 const timeout =(delay)=>{
     return new Promise((resolve, reject) => {
         setTimeout(() => {
